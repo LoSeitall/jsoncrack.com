@@ -1,5 +1,6 @@
 # Builder
 FROM node:18-alpine as builder
+RUN corepack enable
 WORKDIR /src
 
 # Cache dependencies first

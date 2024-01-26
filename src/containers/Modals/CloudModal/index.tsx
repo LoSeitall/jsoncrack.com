@@ -87,8 +87,8 @@ const UpdateNameModal: React.FC<{
 };
 
 export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const totalQuota = useUser(state => (state.premium ? 200 : 25));
-  const isPremium = useUser(state => state.premium);
+  const totalQuota = useUser(state => (state.premium ? 400 : 25));
+  const isPremium = true;
   const getContents = useFile(state => state.getContents);
   const setHasChanges = useFile(state => state.setHasChanges);
   const getFormat = useFile(state => state.getFormat);
@@ -101,7 +101,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   const isCreateDisabled = React.useMemo(() => {
     if (!data?.length) return false;
-    return isPremium ? data.length >= 200 : data.length >= 25;
+    return isPremium ? data.length >= 400 : data.length >= 25;
   }, [isPremium, data?.length]);
 
   const onCreate = async () => {

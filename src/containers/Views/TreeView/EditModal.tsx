@@ -2,11 +2,8 @@ import React from "react";
 import { Button, Divider, Group, Modal, TextInput } from "@mantine/core";
 import _unset from "lodash.unset";
 import _update from "lodash.update";
-import { VscLock } from "react-icons/vsc";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
-import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 
 interface EditModalProps {
   opened: boolean;
@@ -31,8 +28,6 @@ export const EditModal = ({
 }: EditModalProps) => {
   const setContents = useFile(state => state.setContents);
   const getJson = useJson(state => state.getJson);
-  const showPremiumModal = useModal(state => state.setVisible("premium"));
-  const premium = useUser(state => state.premium);
 
   return (
     <Modal centered title={selectedValue} opened={opened} onClose={() => setOpened(false)}>
@@ -49,7 +44,6 @@ export const EditModal = ({
           color="red"
           onClick={() => {
             try {
-              if (!premium) return showPremiumModal(true);
               const updatedJson = JSON.parse(getJson());
               _unset(updatedJson, path);
 
@@ -60,14 +54,13 @@ export const EditModal = ({
               setErrorMessage(error.message);
             }
           }}
-          rightSection={!premium && <VscLock />}
+          rightSection={false}
         >
           Delete
         </Button>
         <Button
           onClick={() => {
             try {
-              if (!premium) return showPremiumModal(true);
               const updatedJson = _update(JSON.parse(getJson()), path, () => JSON.parse(value));
               setContents({ contents: JSON.stringify(updatedJson, null, 2) });
 
@@ -77,7 +70,7 @@ export const EditModal = ({
               setErrorMessage(error.message);
             }
           }}
-          rightSection={!premium && <VscLock />}
+          rightSection={false}
         >
           Apply
         </Button>

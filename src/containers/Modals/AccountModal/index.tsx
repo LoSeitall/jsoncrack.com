@@ -17,7 +17,7 @@ import useUser from "src/store/useUser";
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const user = useSupaUser();
-  const isPremium = useUser(state => state.premium);
+  const isPremium = true;
   const isOrg = useUser(state => state.organization);
   const isOrgAdmin = useUser(state => state.orgAdmin);
   const premiumCancelled = useUser(state => state.premiumCancelled);

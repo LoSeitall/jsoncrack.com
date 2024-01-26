@@ -12,7 +12,6 @@ import { documentSvc } from "src/services/document.service";
 import useConfig from "./useConfig";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
-import useUser from "./useUser";
 
 type SetContents = {
   contents?: string;
@@ -93,7 +92,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     useJson.getState().clear();
   },
   setJsonSchema: jsonSchema => {
-    if (useUser.getState().premium) set({ jsonSchema });
+    set({ jsonSchema });
   },
   setFile: fileData => {
     set({ fileData, format: fileData.format || FileFormat.JSON });

@@ -2,13 +2,10 @@ import React from "react";
 import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import Editor from "@monaco-editor/react";
-import { VscLock } from "react-icons/vsc";
 import { isIframe } from "src/lib/utils/widget";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
-import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -21,9 +18,7 @@ const dataToString = (data: any) => {
 };
 
 export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const isPremium = useUser(state => state.premium);
   const editContents = useFile(state => state.editContents);
-  const setVisible = useModal(state => state.setVisible);
   const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
   const path = useGraph(state => state.selectedNode?.path || "");
@@ -33,7 +28,6 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   const onUpdate = () => {
     if (!value) return setEditMode(false);
-    if (!isPremium) return;
     editContents(path!, value, () => {
       setEditMode(false);
       onModalClose();
@@ -47,8 +41,7 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   };
 
   const onEditClick = () => {
-    if (isPremium) return setEditMode(true);
-    setVisible("premium")(true);
+    setEditMode(true);
   };
 
   const isEditVisible = React.useMemo(
@@ -101,11 +94,7 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                 {value.length ? "Update Document" : "Cancel"}
               </Button>
             ) : (
-              <Button
-                onClick={onEditClick}
-                leftSection={!isPremium && <VscLock />}
-                variant="filled"
-              >
+              <Button onClick={onEditClick} variant="filled">
                 Edit
               </Button>
             )}

@@ -54,7 +54,6 @@ const StyledPromptInput = styled(TextInput)`
 
 export const PromptInput = () => {
   const { updateJson, getJsonType } = useJsonQuery();
-  const premium = useUser(state => state.premium);
   const [completing, setCompleting] = React.useState(false);
   const [prompt, setPrompt] = React.useState("");
   const promptVisible = useConfig(state => state.aiEnabled);
@@ -99,7 +98,7 @@ export const PromptInput = () => {
 
   return (
     <Tooltip
-      disabled={premium}
+      disabled={true}
       w={400}
       multiline
       position="right"
@@ -122,7 +121,7 @@ export const PromptInput = () => {
           value={prompt}
           onChange={e => setPrompt(e.currentTarget.value)}
           maxLength={200}
-          disabled={!premium || completing}
+          disabled={completing}
           onKeyDown={getHotkeyHandler([["Enter", onSubmit]])}
           onSubmit={onSubmit}
           error={

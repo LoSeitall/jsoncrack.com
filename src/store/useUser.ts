@@ -21,7 +21,7 @@ interface UserStates {
 const initialStates: UserStates = {
   user: null,
   isAuthenticated: false,
-  premium: false,
+  premium: true,
   premiumCancelled: false,
   organization: false,
   orgAdmin: false,
@@ -33,12 +33,12 @@ const useUser = create<UserStates & UserActions>()(set => ({
     supabase.rpc("get_subscription_info").then(({ data }) => {
       if (data) {
         set({
-          premium: data.premium,
+          premium: true,
           organization: data.organization,
           premiumCancelled: !!data.cancelled,
           orgAdmin: data.org_admin,
         });
-        ReactGA.set({ tier: data.premium ? "premium" : "free" });
+        ReactGA.set({ tier: "premium" });
       }
 
       set({ user: session.user, isAuthenticated: true });
