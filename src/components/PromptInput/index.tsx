@@ -18,7 +18,6 @@ import { VscClose, VscQuestion } from "react-icons/vsc";
 import useJsonQuery from "src/hooks/useJsonQuery";
 import { supabase } from "src/lib/api/supabase";
 import useConfig from "src/store/useConfig";
-import useUser from "src/store/useUser";
 
 const StyledPromptInput = styled(TextInput)`
   .mantine-TextInput-wrapper {
