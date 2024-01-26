@@ -23,7 +23,6 @@ const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
 
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
-const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
 const ModalController = dynamic(() => import("src/layout/ModalController"));
 
 function JsonCrack({
@@ -75,7 +74,6 @@ function JsonCrack({
               },
             }}
           />
-          <ExternalMode />
         </ThemeProvider>
       </MantineProvider>
     </SessionContextProvider>
